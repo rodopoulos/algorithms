@@ -42,7 +42,7 @@ template <class T> stack<T>::~stack() {
   while (s) {
     p = s;
     s = s->next;
-    delete[] p;
+    delete p;
   }
 }
 
@@ -50,9 +50,7 @@ template <class T> void stack<T>::push(T el) {
   node<T> *p;
   p = new node<T>;
   p->el = el;
-  if (s) {
-    p->next = s;
-  }
+  p->next = s;
   s = p;
   _size++;
 }
@@ -62,7 +60,7 @@ template <class T> T stack<T>::pop() {
   p = s;
   T r = s->el;
   s = p->next;
-  delete[] p;
+  delete p;
   _size--;
 
   return r;
@@ -104,7 +102,13 @@ int main() {
   cout << "Size:" << s1.size() << "\n";
 
   stack<string> s2;
-  s2.push("Oi");
+  s2.push("!");
+  s2.push("World");
+  s2.push(",");
+  s2.push("Hello");
   s2.print();
+  cout << s2.pop() << '\n';
+  cout << s2.pop() << '\n';
+  cout << s2.pop() << '\n';
   return 0;
 }
