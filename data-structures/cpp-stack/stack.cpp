@@ -17,6 +17,7 @@ class stack {
 
   public:
     stack();
+    ~stack();
     void push(T elem);
     T top();
     T pop();
@@ -33,6 +34,15 @@ class stack {
 
 template <class T> stack<T>::stack(){
   _size = 0;
+}
+
+template <class T> stack<T>::~stack() {
+  node<T> *p;
+  while (s) {
+    p = s;
+    s = s->next;
+    delete[] p;
+  }
 }
 
 template <class T> void stack<T>::push(T el) {
