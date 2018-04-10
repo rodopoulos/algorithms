@@ -34,6 +34,7 @@ class stack {
 
 template <class T> stack<T>::stack(){
   _size = 0;
+  s = nullptr;
 }
 
 template <class T> stack<T>::~stack() {
@@ -102,5 +103,8 @@ int main() {
   cout << s1.pop() << "\n";
   cout << "Size:" << s1.size() << "\n";
 
+  stack<string> s2;
+  s2.push("Oi");
+  s2.print();
   return 0;
 }
