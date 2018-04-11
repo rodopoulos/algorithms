@@ -40,7 +40,7 @@ class vector {
 template <class T> void vector<T>::realocate() {
   T *n = new T[_cap * 2];
   memcpy(n, v, _size * sizeof(T));
-  _cap = _cap << 2;
+  _cap = _cap << 1;
   delete[] v;
   v = n;
 }
