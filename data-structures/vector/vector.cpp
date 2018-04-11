@@ -23,7 +23,7 @@ class vector {
     vector();
     vector(int sz);
     ~vector();
-    void insert(T elem);
+    void push_back(T elem);
     void erase(int pos);
     T at(int pos);
     void print();
@@ -61,7 +61,7 @@ template <class T> vector<T>::~vector() {
   delete[] v;
 }
 
-template <class T> void vector<T>::insert(T el) {
+template <class T> void vector<T>::push_back(T el) {
   if (_size + 1 > _cap) {
     realocate();
   }
@@ -92,17 +92,28 @@ template <class T> void vector<T>::print() {
 int main() {
   vector<int> v1;
   v1.print();
-  v1.insert(1);
-  v1.insert(2);
-  v1.insert(3);
-  v1.insert(4);
+  v1.push_back(1);
+  v1.push_back(2);
+  v1.push_back(3);
+  v1.push_back(4);
   v1.print();
-  v1.insert(5);
+  v1.push_back(5);
   v1.print();
-  v1.insert(6);
+  v1.push_back(6);
   v1.print();
+
   v1.erase(1);
   v1.print();
+
+  vector<string> vs;
+  vs.push_back("Hello");
+  vs.push_back(", ");
+  vs.push_back("world");
+  vs.push_back("!");
+  for (int i = 0; i < vs.size(); i++){
+    cout << vs.at(i);
+  }
+  cout << "\n";
 
   return 0;
 }
