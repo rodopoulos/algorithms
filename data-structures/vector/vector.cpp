@@ -4,12 +4,6 @@
 
 using namespace std;
 
-template <typename T>
-struct node {
-  node<T> *next;
-  T el;
-};
-
 template <class T>
 class vector {
   private:
@@ -25,8 +19,10 @@ class vector {
     ~vector();
     void push_back(T elem);
     void erase(int pos);
-    T at(int pos);
     void print();
+    T at(int pos);
+    T& operator[](int);
+    const T& operator[](int) const;
 
     int size() {
       return _size;
@@ -80,6 +76,14 @@ template <class T> T vector<T>::at(int pos) {
   return v[pos];
 }
 
+template <class T> T& vector<T>::operator[](int i) {
+  return v[i];
+}
+
+template <class T> const T& vector<T>::operator[](int i) const {
+  return v[i];
+}
+
 template <class T> void vector<T>::print() {
   cout << "[ ";
   for(int i = 0; i < _size; i++) {
@@ -100,6 +104,9 @@ int main() {
   v1.push_back(5);
   v1.print();
   v1.push_back(6);
+  v1.print();
+
+  v1[3] = 10;
   v1.print();
 
   v1.erase(1);
