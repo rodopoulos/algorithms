@@ -105,11 +105,27 @@ template <class T> T list<T>::pop_back() {
 }
 
 template <class T> void list<T>::insert(node<T> *i, T el){
+  node<T> *n = new node<T>;
+  n->el = el;
+  n->next = i->next;
+  n->prev = i;
 
+  i->next = n;
+  _size++;
 }
 
 template <class T> void list<T>::erase(node<T> *i) {
+  node<T> *prv = i->prev,
+    *nxt = i->next;
 
+  if (nxt) {
+    nxt->prev = prv ? prv : nullptr;
+  }
+  if (prv) {
+    prv->next = nxt ? nxt : nullptr;
+  }
+
+  delete i;
 }
 
 template <class T> void list<T>::print() {
