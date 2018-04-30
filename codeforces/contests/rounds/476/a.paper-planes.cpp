@@ -6,7 +6,7 @@ int dceil(int a, int b) {
 }
 
 int main() {
-  float n, s, k, p;
+  int n, s, k, p;
 
   cin >> k >> n >> s >> p;
 
