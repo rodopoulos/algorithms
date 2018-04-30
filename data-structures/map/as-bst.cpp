@@ -119,6 +119,8 @@ template <class K, class V> node<K,V>* map<K,V>::inordersuc(node<K,V> *p) {
 
 
 template <class K, class V> node<K,V>* map<K,V>::_erase(node<K,V>* r, const K& key) {
+  if (!root) return root;
+
   if (key < r->key) {
     r->l = _erase(r->l, key);
   } else if(key > r->key) {
@@ -146,8 +148,6 @@ template <class K, class V> node<K,V>* map<K,V>::_erase(node<K,V>* r, const K& k
 
 
 template <class K, class V> void map<K,V>::erase(const K& key) {
-  if (!root) return;
-
   _erase(root, key);
 }
 
