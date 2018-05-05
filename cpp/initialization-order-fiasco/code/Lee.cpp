@@ -6,6 +6,7 @@ Lee::Lee() {
 
 void Lee::tune_bass() {
   // tunning...
+  bass_tuned = true;
 }
 
 // Here is our Global Geddy
