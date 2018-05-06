@@ -1,4 +1,4 @@
 class Rush {
-public:
-  Rush();
+  public:
+    Rush();
 };

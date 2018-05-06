@@ -1,9 +1,12 @@
+#include <vector>
+#include <string>
+
 class Lee {
   public:
-    bool bass_tuned;
+    std::vector<int> notes;
 
     Lee();
-    void tune_bass();
+    void add_notes();
 };
 
 extern Lee lee;

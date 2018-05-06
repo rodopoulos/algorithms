@@ -1,12 +1,11 @@
 #include "Lee.h"
 
-Lee::Lee() {
-  // that damn glasses
-}
+Lee::Lee() {}
 
-void Lee::tune_bass() {
-  // tunning...
-  bass_tuned = true;
+void Lee::add_notes() {
+  // adding notes...
+  notes.push_back(1);
+  notes.push_back(2);
 }
 
 // Here is our Global Geddy

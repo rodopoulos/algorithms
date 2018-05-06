@@ -2,5 +2,5 @@
 #include "Lee.h"
 
 Rush::Rush() {
-  lee.tune_bass();
+  lee.add_notes();
 }
