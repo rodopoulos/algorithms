@@ -1,5 +1,3 @@
-#include <vector>
-
 class B {
 public:
   B();
