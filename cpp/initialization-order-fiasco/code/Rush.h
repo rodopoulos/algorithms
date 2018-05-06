@@ -1,4 +1,0 @@
-class Rush {
-  public:
-    Rush();
-};
