@@ -9,6 +9,8 @@ Using binary search trees, we have a simpler map implementation. Each map pair w
 ### Operations
 
 ## As a Treap
-Treap (tree + heaps) is a data structure that combines BST and heaps and can be used in manner that behaves as a self-balancing BST. Here, each map pair will correspond to a treap node, indexed both by the key value and mapped value.
+Treaps are another way to implement self balancing binary search trees, basically combining a binary cartesian tree with heaps.
+
+ data structure that combines BST and heaps and can be used in manner that behaves as a self-balancing BST. Here, each map pair will correspond to a treap node, indexed both by the key value and mapped value.
 
 ### Operations
