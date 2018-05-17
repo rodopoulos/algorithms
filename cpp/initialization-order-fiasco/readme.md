@@ -42,7 +42,7 @@ int main () {
 }
 ```
 
-Let's depict the code above. In the first file, we have class `A`, which constructor pushes some data to an dynamic allocation data structure. Let's use a `std::vector` as an example. Its `foo()` method will get the first value of its vector and assign 1 to it. Finally, at the end of the file, we instantiate a global object from this class that will be visible to all other files. 
+Let's depict the code above. In the first file, we have class `A`, which constructor pushes some data to an dynamic allocation data structure. Let's use a `std::vector` as an example. Its `foo()` method will get the first value of its vector and assign 1 to it. Finally, at the end of the file, we instantiate a global object from this class that will be visible to all other files.
 
 Then, we have class `B`, which basically has a constructor that calls method `foo` from the previous global object from class `A`. As the previous file, we instantiate a global object for `B` that will be visible across all files. The `main.cpp` file does nothing at all: just call `B` header file and start `main`.
 
@@ -56,3 +56,4 @@ Assume we compile these previous code in a pretty straightfoward way:
 g++ A.cpp B.cpp main.cpp -o program
 ```
 
+What the compiler will do here?

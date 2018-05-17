@@ -1,8 +1,9 @@
-#include <vector>
+// #include <vector>
 
 class A {
 public:
-  std::vector<int> n;
+  // std::vector<int> n;
+  int k;
 
   A();
   void foo();
