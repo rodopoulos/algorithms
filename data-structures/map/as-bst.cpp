@@ -21,11 +21,12 @@ class map {
     int _size;
     node<K, V> *root;
 
-    node<K,V>* _findinsert(K, node<K,V>*);
     void _recdestruct(node<K,V>*);
     void _print(node<K,V>*);
+    node<K,V>* _find(node<K,V>*, K);
     node<K,V>* _erase(node<K,V>*, const K&);
-    node<K,V>*inordersuc(node<K,V>*);
+    node<K,V>* _findinsert(node<K,V>*, K);
+    node<K,V>* _inordersuc(node<K,V>*);
 
   public:
     map();
@@ -68,29 +69,15 @@ void map<K,V>::_recdestruct(node<K,V> *p) {
 
 
 template <class K, class V>
-node<K,V>* map<K,V>::_findinsert(K key, node<K,V> *p) {
-  if (key == p->key) {
-    return p;
-
+node<K,V>* map<K,V>::_findinsert(node<K,V> *p, K key) {
+  if (p == nullptr) {
+    return new node<K,V>(key);
+  } else if (key == p->key) {
+      return p;
   } else if (key < p->key) {
-    if(p->l) {
-      return _findinsert(key, p->l);
-    } else {
-      node<K,V> *n = new node<K,V>(key);
-      p->l = n;
-      _size++;
-      return n;
-    }
-
-  } else {
-    if(p->r) {
-      return _findinsert(key, p->r);
-    } else {
-      node<K,V> *n = new node<K,V>(key);
-      p->r = n;
-      _size++;
-      return n;
-    }
+      return _findinsert(p->l, key);
+  } else { // key > p->key
+      return _findinsert(p->r, key);
   }
 }
 
@@ -98,7 +85,7 @@ node<K,V>* map<K,V>::_findinsert(K key, node<K,V> *p) {
 template <class K, class V> V& map<K,V>::operator[](K key) {
   node<K,V> *n;
   if (root) {
-    n = _findinsert(key, root);
+    n = _findinsert(root, key);
   } else {
     n = new node<K,V>(key);
     root = n;
@@ -109,7 +96,7 @@ template <class K, class V> V& map<K,V>::operator[](K key) {
 }
 
 
-template <class K, class V> node<K,V>* map<K,V>::inordersuc(node<K,V> *p) {
+template <class K, class V> node<K,V>* map<K,V>::_inordersuc(node<K,V> *p) {
   while (p->l) {
     p = p->l;
   }
@@ -118,37 +105,45 @@ template <class K, class V> node<K,V>* map<K,V>::inordersuc(node<K,V> *p) {
 }
 
 
-template <class K, class V> node<K,V>* map<K,V>::_erase(node<K,V>* r, const K& key) {
-  if (!root) return root;
+template <class K, class V>
+node<K,V>* map<K,V>::_find(node<K,V>* n, K key) {
+  if (n == nullptr) return nullptr;
 
-  if (key < r->key) {
-    r->l = _erase(r->l, key);
-  } else if(key > r->key) {
-    r->r = _erase(r->r, key);
-  } else {
-    if (!r->l) {
-      node<K,V> *a = r->r;
-      delete r;
-      return a;
-    }
-
-    if (!r->r) {
-      node<K,V> *a = r->l;
-      delete r;
-      return a;
-    }
-
-    node<K,V> *a = inordersuc(r->r);
-    r->key = a->key;
-    r->val = a->val;
-    r->r = _erase(r->r, a->key);
+  else if (key == n->key) {
+    return n;
+  } else if (key < n->key){
+    return _find(n->l, key);
+  } else { // keu > n-->key
+    return _find(n->r, key);
   }
-  return r;
+}
+
+template <class K, class V>
+node<K,V>* map<K,V>::_erase(node<K,V>* n, const K& key) {
+  if (n->l == nullptr) {
+    delete n;
+  }
+
+  else if (n->r == nullptr) {
+    n->key = n->l->key;
+    delete n->l;
+    n->l = nullptr;
+  }
+
+  else { // we have two children
+    node<K,V> *a = _inordersuc(n->r);
+    n->key = a->key;
+    n->val = a->val;
+    n->r = _erase(n->r, a->key);
+    return n;
+  }
 }
 
 
 template <class K, class V> void map<K,V>::erase(const K& key) {
-  _erase(root, key);
+  node<K,V> *n = _find(root, key);
+  if (n)
+    _erase(root, key);
 }
 
 template <class K, class V> void map<K,V>::_print(node<K,V> *p) {
