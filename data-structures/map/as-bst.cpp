@@ -71,13 +71,18 @@ void map<K,V>::_recdestruct(node<K,V> *p) {
 template <class K, class V>
 node<K,V>* map<K,V>::_findinsert(node<K,V> *p, K key) {
   if (p == nullptr) {
+    _size++;
     return new node<K,V>(key);
   } else if (key == p->key) {
       return p;
   } else if (key < p->key) {
+      if (!p->l)
+        p->l = _findinsert(p->l, key);
       return _findinsert(p->l, key);
   } else { // key > p->key
-      return _findinsert(p->r, key);
+    if (!p->r)
+      p->r = _findinsert(p->r, key);
+    return _findinsert(p->r, key);
   }
 }
 
@@ -120,29 +125,41 @@ node<K,V>* map<K,V>::_find(node<K,V>* n, K key) {
 
 template <class K, class V>
 node<K,V>* map<K,V>::_erase(node<K,V>* n, const K& key) {
-  if (n->l == nullptr) {
-    delete n;
-  }
-
-  else if (n->r == nullptr) {
-    n->key = n->l->key;
-    delete n->l;
-    n->l = nullptr;
-  }
-
-  else { // we have two children
-    node<K,V> *a = _inordersuc(n->r);
-    n->key = a->key;
-    n->val = a->val;
-    n->r = _erase(n->r, a->key);
+  if (n == nullptr)
     return n;
+
+  else if (key < n->key)
+    n->l = _erase(n->l, key);
+
+  else if (key > n->key)
+    n->r = _erase(n->r, key);
+
+  else { // key == n->key
+    if (!n->l) { // no child
+      node<K,V> *temp = n->r;
+      _size--;
+      delete n;
+      return temp;
+
+    } else if(!n->r) { // only one child
+      node<K,V> *temp = n->l;
+      _size--;
+      delete n;
+      return temp;
+    }
+
+    node<K,V> *temp = _inordersuc(n->r);
+    n->val = temp->val;
+    n->key = temp->key;
+    n->r = _erase(n->r, temp->key);
   }
+
+  return n;
 }
 
 
 template <class K, class V> void map<K,V>::erase(const K& key) {
-  node<K,V> *n = _find(root, key);
-  if (n)
+  if (root)
     _erase(root, key);
 }
 
@@ -155,8 +172,11 @@ template <class K, class V> void map<K,V>::_print(node<K,V> *p) {
 }
 
 template <class K, class V> void map<K,V>::print() {
-  _print(root);
-  cout << '\n';
+  if (root)
+    _print(root);
+  else
+    cout << "[EMPTY]";
+  cout << endl;
 }
 
 
@@ -169,12 +189,20 @@ int main() {
   m1[4] = "four";
   m1[6] = "six";
 
+  cout << "MAP:" << endl;
   m1.print();
-  cout << "Size: " << m1.size() << '\n';
-  m1.erase(5);
+  cout << "Size: " << m1.size() << endl << endl;
+
+  cout << "Erasing FOUR" << endl;
+  m1.erase(4);
   m1.print();
+  cout << "Erasing THREE" << endl;
   m1.erase(3);
   m1.print();
+  cout << "Erasing FIVE" << endl;
+  m1.erase(5);
+  m1.print();
+  cout << endl << "Final size: " << m1.size() << endl;
 
   return 0;
 }
