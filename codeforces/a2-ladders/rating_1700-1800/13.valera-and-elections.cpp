@@ -3,21 +3,21 @@
  *
  * SOLUTION OVERVIEW
  * We call vertex number 1 as root. Basically, we need to find all vertex u that
- * belongs to the last problem-edge (u,v) in all paths from the root to the
- * leafs, given that u can only be explored once.
+ * belongs to the last problem-edge (u,v) in all paths from the root to a leaf.
+ *
 */
 #include <bits/stdc++.h>
 using namespace std;
 
 #define N 100005
 
-int prob[N], dp[N], ans = 0;
+int prob[N], c[N], ans = 0;
 vector<int> city[N];
 
 
 
 void explore(int u, int prev) {
-  dp[u] = prob[u];
+  c[u] = prob[u];
 
   int sz = city[u].size();
   for (int i = 0; i < sz; i++) {
@@ -26,9 +26,9 @@ void explore(int u, int prev) {
       continue;
 
     explore(v, u);
-    dp[u] += dp[v];
+    c[u] += c[v];
   }
-  if (dp[u] == 1) ans++;
+  if (c[u] == 1) ans++;
 }
 
 
@@ -53,7 +53,7 @@ int main () {
 
   cout << ans << endl;
   for (int i = 1; i <= n; i++) {
-    if (dp[i] == 1)
+    if (c[i] == 1)
       cout << i << ' ';
   }
   cout << endl;
