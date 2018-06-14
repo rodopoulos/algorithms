@@ -2,21 +2,27 @@
 
 using namespace std;
 
+int dp[4001], a, b, c;
+
+int pieces(int n) {
+  if (n == 0)
+    return 0;
+
+  if (n < 0 || (n<a && n<b && n<c))
+    return 0x80000000;
+
+  if (!dp[n])
+    dp[n] = max(pieces(n-a), max(pieces(n-b), pieces(n-c))) + 1;
+
+  return dp[n];
+}
+
 int main() {
-  int n, a, b, c;
+  int n;
 
   cin >> n >> a >> b >> c;
 
-
-  int st = 1,
-  en = n*n;
-  for (int i = 1; i <= n; i++) {
-    for (int j = 0; j < n; j++) {
-      if (j%2 == 0)
-        cout << st++ << ' ' << en-- << ' ';
-    }
-    cout << endl;
-  }
+  cout << pieces(n) << endl;
 
   return 0;
 }
