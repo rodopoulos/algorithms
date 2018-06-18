@@ -2,4 +2,4 @@
 *.exe
 *.gch
 
-./test.cpp
+test.cpp
