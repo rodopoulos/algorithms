@@ -15,17 +15,10 @@
 using namespace std;
 typedef long long ll;
 
-ll gcd(ll a, ll b){
-  if (b)
-    return gcd(b, a % b);
-  else
-    return a;
-}
-
 // this code here is in O(sqrt(n))
 vector<ll> divisors(ll n) {
   vector<ll> ans;
-  for (int i = 1; i <= sqrt(n); i++) {
+  for (int i = 1; i*i <= n; i++) {
     if (n%i == 0) {
       if (n/i == i) {
         ans.push_back(i);
@@ -54,7 +47,7 @@ int main() {
       if (a > b)
         swap(a, b);
 
-      ll g = gcd(a,b);
+      ll g = __gcd(a,b);
       if (g == x && y == (a*b)/g && a >= l && b <= r) {
         ans ++;
       }
