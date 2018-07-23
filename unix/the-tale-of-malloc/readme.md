@@ -12,3 +12,14 @@ Each process running in Linux sees an abstraction of the physical memory, implem
 The translations between virtual and physical addresses happen along programs execution, aided by the process **page table**. For that, both virtual and physical memory are divided into blocks called **pages**, both having the same size and being in power of 2, for obvious simplicity reasons. In this manner, anytime a process tries to operate its memory, the computer processor will use the process' page table to correctly translate
 
 The Linux kernel describe each process as a `task_struct` instance, a struct that contains several information information about each process running in the machine. One of these pieces of data is the `mm` field, a pointer to struct `mm_struct`, which describes
+
+
+# `malloc` workflow
+
+Finally, we can build a proper workflow for `malloc` function. We build the following situation, with the following code:
+
+```c
+if (isAwesome){
+  return true
+}
+```
